@@ -1,0 +1,61 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #dfdfdf;
+  margin: 0;
+}
+
+.logs {
+  width: 800px;
+  background-color: #eae2b7;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.item {
+  display: flex; /* 弹性盒 */
+  margin: 16px 0;
+  padding: 6px;
+  background-color: #fcbf49;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.date {
+  width: 90px;
+  background-color: #fff;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  overflow: hidden;
+}
+
+.month {
+  height: 20px;
+  background: #d62828;
+}
+
+.day{
+    height: 60px;
+    line-height: 60px;
+    font-size: 50px;
+}
+
+.content{
+    flex: auto;/* 自动收缩（占满后面空的地方）不写的话，因为父盒子是弹性盒，他默认是不不贪心的，多出来的地方就先空着了 */
+    text-align: center;
+    background-color: #fdbf49;
+    font-weight: bold;
+}
+
+.desc{
+    font-size: 16px;
+    color: #194b49;
+}
+.time{
+    color: #d62828;
+}

@@ -10,4 +10,4 @@ import './index.css'
 
 const root = ReactDom.createRoot(document.querySelector("#root"))
 
-root.render(<App></App>)/* 以组件形式渲染 */
+root.render(<App date1={"六月五日"} date2="六月六日"></App>)/* 以组件形式渲染 */
