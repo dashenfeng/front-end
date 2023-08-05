@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
-import './index.css'
-import User from './components/User'
+import Logs from "./Components/Logs/Logs";
+import LogsForm from "./Components/LogsFrom/LogsForm"
+import "./Components/LogsFrom/LogsForm.css"
+import "./App.css"
 
+const App = () => {
+  return <div className="app">
+    <LogsForm></LogsForm>
+    <Logs/>
+  </div>
+};
 
-export default class App extends Component {
-  render() {
-    return (
-      <div className='box'>
-        <User name='可莉' age='12' gender={'女'} /> {/* name和gender传的方法没差，都是传字符串呢 */}
-      </div>
-    )
-  }
-}
+// 导出App
+export default App;
