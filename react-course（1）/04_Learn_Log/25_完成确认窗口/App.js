@@ -61,7 +61,7 @@ const App = () => {
     };
 
     return <div className="app">
-        {/*引入LogsFrom*/}
+        {/*引入LogsForm*/}
         <LogsForm onSaveLog={saveLogHandler}/>
         <Logs logsData={logsData} onDelLog={delLogByIndex}/>
     </div>;

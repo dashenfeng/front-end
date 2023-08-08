@@ -1,6 +1,6 @@
 import Logs from "./Components/Logs/Logs";
-import LogsForm from "./Components/LogsFrom/LogsForm"
-import "./Components/LogsFrom/LogsForm.css"
+import LogsForm from "./Components/LogsForm/LogsForm"
+import "./Components/LogsForm/LogsForm.css"
 import "./App.css"
 
 const App = () => {
