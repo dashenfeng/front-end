@@ -1,22 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "../UI/Card/Card";
 
 export default function LogsForm() {
-  let date = "";
-  let desc = "";
-  let time = 0;
+  /* 这边用useState，表单里input添加value，实现双向绑定 */
+  const [date,setDate] = useState('')
+  const [desc,setDesc] = useState('')
+  const [time,setTime] = useState('')
 
   const dateChangeHandler = (e) => {
     // console.log("date is changed", e.target.value);
-    date = e.target.value
+    setDate(e.target.value)
   };
   const descChangeHandler = (e) => {
     // console.log("desc is changed", e.target.value);
-    desc = e.target.value
+    setDesc(e.target.value)
   };
   const timeChangeHandler = (e) => {
     // console.log("time is changed", e.target.value);
-    time = e.target.value
+    setTime(e.target.value)
   };
   const formSubmit = (e) => {
     e.preventDefault(); // 取消表单的默认行为(跳转)
@@ -26,6 +27,10 @@ export default function LogsForm() {
         time
     }
     console.log(newLog);
+    setDate('')
+    setDesc('')
+    setTime('')
+
   };
 
   return (
@@ -33,15 +38,15 @@ export default function LogsForm() {
       <form onSubmit={formSubmit}>
         <div className="form-item">
           <label htmlFor="date">日期</label>
-          <input id="date" type="date" onChange={dateChangeHandler}></input>
+          <input id="date" type="date" onChange={dateChangeHandler} value={date}></input>
         </div>
         <div className="form-item">
           <label htmlFor="desc">内容</label>
-          <input id="desc" type="text" onChange={descChangeHandler}></input>
+          <input id="desc" type="text" onChange={descChangeHandler} value={desc}></input>
         </div>
         <div className="form-item">
           <label htmlFor="time">时长</label>
-          <input id="time" type="number" onChange={timeChangeHandler}></input>
+          <input id="time" type="number" onChange={timeChangeHandler} value={time}></input>
         </div>
         <div className="form-btn">
           <button>添加</button>
