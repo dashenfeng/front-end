@@ -13,6 +13,15 @@
     font-weight: bold;
 }
 
+.delete{
+    background-color: rgb(252, 191, 73);
+    margin-right: 10px;
+    cursor: pointer;
+}
+.delete:hover{
+    color: #D62828;
+}
+
 /*设置描述内容*/
 .desc{
     font-size: 16px;

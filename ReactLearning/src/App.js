@@ -44,10 +44,18 @@ const App = () => {
       newLog
     ])
  }
+ const delLogsById = (index) => {
+    /* 解决异步问题,由于splice具有破坏性，所以先用扩展运算符来copy一个新的数组 */
+    setLogsData(prevState => {
+      const newLogs = [...prevState]
+      newLogs.splice(index,1)
+      return newLogs
+    })
+ }
   return (
     <div className="app">
       <LogsForm onSaveLog={saveLogHandler}></LogsForm>
-      <Logs logsData={logsData} />
+      <Logs logsData={logsData} onDelLog = {delLogsById} />
     </div>
   );
 };
