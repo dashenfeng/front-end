@@ -1,0 +1,7 @@
+*{
+    box-sizing: border-box; /* 怪异盒 */
+}
+
+body{
+    margin: 0;
+}

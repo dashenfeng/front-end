@@ -1,12 +1,10 @@
 import React from 'react';
-import './App.css'
+import Meals from './components/Meals'
 
 const App = () => {
     return (
         <div>
-            <p className='pstyle'>Hello React!</p>
-            <button>123</button>
-           
+            <Meals></Meals>
         </div>
     );
 };

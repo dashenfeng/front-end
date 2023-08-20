@@ -1,0 +1,7 @@
+/* 设置div盒子的高度，这样内容溢出后，在盒子里面出来滚动条 */
+.Meals{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+}
