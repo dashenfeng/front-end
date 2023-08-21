@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
 import "./index.css";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus, faMinus} from "@fortawesome/free-solid-svg-icons";
 
 export default function Counter(props) {
   return (
@@ -7,14 +9,14 @@ export default function Counter(props) {
       {props.amount && props.amount !== 0 ? (
         <Fragment>
           <button className="sub">
-            <span>-</span>
+          <FontAwesomeIcon icon={faMinus}/>
           </button>
           <span className="count">{props.amount}</span>
         </Fragment>
       ) : null}
 
       <button className="add">
-        <span>+</span>
+      <FontAwesomeIcon icon={faPlus}/>
       </button>
     </div>
   );

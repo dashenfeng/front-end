@@ -3,17 +3,18 @@ import './index.css'
 import Counter from '../UI/Counter'
 /* 单个食物信息 */
 
-export default function Meal() {
+export default function Meal(props) {
+  console.log(props);
   return (
     <div className='Meal'>
         <div className='ImgBox'>
-            <img src='../../../../public/img/meals/1.png' alt='broken'></img>
+            <img src={props.meal.img} alt='broken'></img>
         </div>
         <div>
-            <h2 className='Title'>汉堡包</h2>
-            <p className='Desc'>好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</p>
+            <h2 className='Title'>{props.meal.title}</h2>
+            <p className='Desc'>{props.meal.desc}</p>
             <div className='PriceWrap'>
-                <span className='Price'>12</span>
+                <span className='Price'>{props.meal.price}</span>
                 <Counter amount={1}></Counter>
             </div>
         </div>
