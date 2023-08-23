@@ -4,7 +4,7 @@ import Counter from '../UI/Counter'
 /* 单个食物信息 */
 
 export default function Meal(props) {
-  console.log(props);
+  // console.log(props,'123123');
   return (
     <div className='Meal'>
         <div className='ImgBox'>
@@ -15,7 +15,7 @@ export default function Meal(props) {
             <p className='Desc'>{props.meal.desc}</p>
             <div className='PriceWrap'>
                 <span className='Price'>{props.meal.price}</span>
-                <Counter amount={1}></Counter>
+                <Counter meal={props.meal} ></Counter>
             </div>
         </div>
     </div>
