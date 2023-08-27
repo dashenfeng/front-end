@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Meals from "./components/Meals";
 import CartContext from "./store/cartContext";
+import FilterMeals from "./components/FilterMeals";
+import Cart from './components/Cart'
 
 // 模拟一组食物数据
 const MEALS_DATA = [
@@ -9,14 +11,14 @@ const MEALS_DATA = [
     title: "汉堡包",
     desc: "百分百纯牛肉配搭爽脆酸瓜洋葱粒与美味番茄酱经典滋味让你无法抵挡！",
     price: 12,
-    img: "/img/meals/1.png",
+    img: "../../../public/meals/1.png",
   },
   {
     id: "2",
     title: "双层吉士汉堡",
     desc: "百分百纯牛肉与双层香软芝，加上松软面包及美味酱料，诱惑无人能挡！",
     price: 20,
-    img: "/img/meals/2.png",
+    img: "../public/meals/2.png",
   },
   {
     id: "3",
@@ -63,7 +65,7 @@ const App = () => {
     totalAmount: 0,
     totalPrice: 0,
   });
-  // 向购物车里添加/减少商品
+  // 向购物车里添加商品
   const addMealHandler = (meal) => {
     // console.log(meal,'meal');
     const newCart = { ...cartData };
@@ -79,7 +81,7 @@ const App = () => {
     newCart.totalPrice += meal.price;
     setCartData(newCart);
   };
-
+  // 向购物车里减少商品
   const subMealHandler = (meal) => {
     const newCart = { ...cartData };
     meal.amount -= 1;
@@ -88,12 +90,19 @@ const App = () => {
     newCart.totalPrice -= meal.price;
     setCartData(newCart);
   };
+  // 过滤meals
+  const filterHandler = (keyWord) => {
+    const newMealsData = MEALS_DATA.filter(item => item.title.indexOf(keyWord) !== -1)
+    setMealsData(newMealsData)
+  }
 
   return (
     <CartContext.Provider
       value={{ ...cartData, addMealHandler, subMealHandler }}>
       <div>
+        <FilterMeals onFilter={filterHandler}></FilterMeals>
         <Meals mealsData={mealsData}></Meals>
+        <Cart></Cart>
       </div>
     </CartContext.Provider>
   );
