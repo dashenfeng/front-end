@@ -37,6 +37,7 @@ img{
 .Price{
     font-weight: bold;
     font-size: 18px;
+    
 }
 .Price::before{
     content: '￥';

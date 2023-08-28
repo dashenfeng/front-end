@@ -12,10 +12,10 @@ export default function Meal(props) {
         </div>
         <div>
             <h2 className='Title'>{props.meal.title}</h2>
-            <p className='Desc'>{props.meal.desc}</p>
+            {props.noDesc ? null : <p className='Desc'>{props.meal.desc}</p>}
             <div className='PriceWrap'>
                 <span className='Price'>{props.meal.price}</span>
-                <Counter meal={props.meal} ></Counter>
+                <Counter meal={props.meal}></Counter>
             </div>
         </div>
     </div>

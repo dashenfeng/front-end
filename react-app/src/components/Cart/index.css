@@ -39,21 +39,21 @@
     right: -10rem;
 }
 
-.Price,.noMeal{
-    color: #fff;
-    margin-left: 100rem;
+.totalPrice,.noMeal{
     display: flex;
     font-size: 36rem;
     font-weight: bold;
     align-items: center;
 }
-.Price::before{
+.totalPrice::before{
     content: '￥';
     font-size: 24rem;
+    margin-left: 100rem;
 }
 
 .noMeal{
     color: #aaa;
+    margin-left: 100rem;
 }
 
 
