@@ -8,15 +8,20 @@ import Meal from '../../Meals/Meal/index'
 
 export default function CartDetails() {
   const context = useContext(CartContext)
+
+  const clearHandler = () => {
+    context.clearCart()
+  }
   
   return (
     <Backdrop>
-        <div className='CartDetails'>
+      {/* 给div加了阻止冒泡，backdrop没有加，这样点击遮罩层还是能取消掉 */}
+        <div className='CartDetails' onClick={e => e.stopPropagation()}>
           <header className='header'>
               <h2 className='title'>餐品详情</h2>
               <div className='clear'>
                 <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                <span>清空购物车</span>
+                <span onClick={clearHandler}>清空购物车</span>
               </div>
           </header>
 

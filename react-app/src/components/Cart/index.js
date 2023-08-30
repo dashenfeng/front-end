@@ -1,21 +1,40 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import './index.css'
 import iconImg from '../../asset/bag.png'
 import cartContext from '../../store/cartContext'
 import CartDetails from './Cartdetails'
+import Checkout from './Checkout'
 
 export default function Cart() {
   const ctx = useContext(cartContext)
-  console.log(ctx);
+  const [showDetails, setShowDetails] = useState(false)  // 控制设置详情是否显示
+  const [showCheckout,setShowCheckout] = useState(false)
+
+  const changeDetailsState = () => {
+    if (ctx.totalAmount === 0) {
+      setShowDetails(false)
+      return
+    } // 没有商品的时候就直接返回
+    setShowDetails(prevState => !prevState)
+  }
+  const showCheckoutHandler = () => {
+    if (ctx.totalAmount === 0) return
+    setShowCheckout(true)
+  }
+  const closeCheckout = () => {
+    setShowCheckout(false)
+  }
+
   return (
-    <div className='cart'>
-      <CartDetails></CartDetails>
+    <div className='cart' onClick={changeDetailsState}>
+      {showCheckout && <Checkout onHide={closeCheckout}></Checkout>}
+      {showDetails && <CartDetails></CartDetails>} {/* 相当于if了 */}
       <div className='icon'>
         <img src={iconImg} alt='盒子'></img>
         {ctx.totalAmount === 0 ? null : <span className='TotalAmount'>{ctx.totalAmount}</span>}
       </div>
       {ctx.totalAmount === 0 ? <p className='noMeal'>未选购商品</p> : <p className='totalPrice'>{ctx.totalPrice}</p>}
-      <button className={`Button ${ctx.totalAmount === 0 ? 'btnDisabled' : '' }`}>去结算</button>
+      <button className={`Button ${ctx.totalAmount === 0 ? 'btnDisabled' : '' }`} onClick={showCheckoutHandler}>去结算</button>
     </div>
   )
 }
