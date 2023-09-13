@@ -20,7 +20,7 @@ export default function CartDetails() {
   };
   const okHandler = () => {
     setShowConfirm(false);
-    context.clearCart();
+    context.cartDispatch({type:'CLEAR'});
   };
 
   return (

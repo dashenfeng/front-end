@@ -8,11 +8,12 @@ export default function Counter(props) {
   const Cart = useContext(CartContext);
   // console.log(props,'props....');
   const addHandler = () => {
-    Cart.addMealHandler(props.meal);
-    // console.log(props.meal.amount,'props.amount');
+    // Cart.addMealHandler(props.meal);
+    Cart.cartDispatch({ type: "ADD", meal: props.meal });
   };
   const subHandler = () => {
-    Cart.subMealHandler(props.meal);
+    Cart.cartDispatch({ type: "REMOVE", meal: props.meal });
+    // Cart.subMealHandler(props.meal);
   };
 
   return (

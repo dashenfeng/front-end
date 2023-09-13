@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import Meals from "./components/Meals";
 import CartContext from "./store/cartContext";
 import FilterMeals from "./components/FilterMeals";
@@ -57,60 +57,98 @@ const MEALS_DATA = [
   },
 ];
 
+const cartReducer = (state, action) => {
+  const newCart = { ...state };
+  switch (action.type) {
+    case "ADD":
+      if (newCart.items.indexOf(action.meal) === -1) {
+        newCart.items.push(action.meal);
+        action.meal.amount = 1;
+      } else {
+        action.meal.amount += 1;
+      }
+      newCart.totalAmount += 1;
+      newCart.totalPrice += action.meal.price;
+      return newCart; // reducer需要返回值作为最新的state
+    case "REMOVE":
+      action.meal.amount -= 1;
+      action.meal.amount === 0 &&
+        newCart.items.splice(newCart.items.indexOf(action.meal), 1); // 数量为0时移除商品
+      newCart.totalAmount -= 1;
+      newCart.totalPrice -= action.meal.price;
+      return newCart; // reducer需要返回值作为最新的state
+    case "CLEAR":
+      newCart.items.forEach((item) => delete item.amount);
+      newCart.items = [];
+      newCart.totalAmount = 0;
+      newCart.totalPrice = 0;
+      return newCart;
+    default:
+      return "";
+  }
+};
+
 const App = () => {
   const [mealsData, setMealsData] = useState(MEALS_DATA);
   // 购物车数据
-  const [cartData, setCartData] = useState({
+  // const [cartData, setCartData] = useState({
+  //   items: [],
+  //   totalAmount: 0,
+  //   totalPrice: 0,
+  // });
+  const [cartData, cartDispatch] = useReducer(cartReducer, {
     items: [],
     totalAmount: 0,
     totalPrice: 0,
   });
   // 向购物车里添加商品
-  const addMealHandler = (meal) => {
-    // console.log(meal,'meal');
-    const newCart = { ...cartData };
-    if (newCart.items.indexOf(meal) === -1) {
-      newCart.items.push(meal);
-      meal.amount = 1;
-      //   console.log(meal.amount,'amount');
-    } else {
-      meal.amount += 1;
-      //   console.log(meal.amount,'amount');
-    }
-    newCart.totalAmount += 1;
-    newCart.totalPrice += meal.price;
-    setCartData(newCart);
-  };
+  // const addMealHandler = (meal) => {
+  //   // console.log(meal,'meal');
+  //   const newCart = { ...cartData };
+  //   if (newCart.items.indexOf(meal) === -1) {
+  //     newCart.items.push(meal);
+  //     meal.amount = 1;
+  //     //   console.log(meal.amount,'amount');
+  //   } else {
+  //     meal.amount += 1;
+  //     //   console.log(meal.amount,'amount');
+  //   }
+  //   newCart.totalAmount += 1;
+  //   newCart.totalPrice += meal.price;
+  //   setCartData(newCart);
+  // };
   // 向购物车里减少商品
-  const subMealHandler = (meal) => {
-    const newCart = { ...cartData };
-    meal.amount -= 1;
-    meal.amount === 0 && newCart.items.splice(newCart.items.indexOf(meal), 1); // 数量为0时移除商品
-    newCart.totalAmount -= 1;
-    newCart.totalPrice -= meal.price;
-    setCartData(newCart);
-  };
+  // const subMealHandler = (meal) => {
+  //   const newCart = { ...cartData };
+  //   meal.amount -= 1;
+  //   meal.amount === 0 && newCart.items.splice(newCart.items.indexOf(meal), 1); // 数量为0时移除商品
+  //   newCart.totalAmount -= 1;
+  //   newCart.totalPrice -= meal.price;
+  //   // setCartData(newCart);
+  // };
   // 过滤meals
+  // 清空购物车
+  // const clearCart = () => {
+  //   const newCart = { ...cartData };
+  //   newCart.items.forEach((item) => delete item.amount);
+  //   newCart.items = [];
+  //   newCart.totalAmount = 0;
+  //   newCart.totalPrice = 0;
+
+  //   // setCartData(newCart);
+  // };
+
   const filterHandler = (keyWord) => {
     const newMealsData = MEALS_DATA.filter(
       (item) => item.title.indexOf(keyWord) !== -1
     );
     setMealsData(newMealsData);
   };
-  // 清空购物车
-  const clearCart = () => {
-    const newCart = { ...cartData };
-    newCart.items.forEach((item) => delete item.amount);
-    newCart.items = [];
-    newCart.totalAmount = 0;
-    newCart.totalPrice = 0;
-
-    setCartData(newCart);
-  };
 
   return (
     <CartContext.Provider
-      value={{ ...cartData, addMealHandler, subMealHandler, clearCart }}>
+      // value={{ ...cartData, addMealHandler, subMealHandler, clearCart }}>
+      value={{ ...cartData, cartDispatch }}>
       <div>
         <FilterMeals onFilter={filterHandler}></FilterMeals>
         <Meals mealsData={mealsData}></Meals>

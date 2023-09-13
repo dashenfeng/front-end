@@ -20,7 +20,6 @@ export default function Cart() {
 
   // 用useEffect可破
   useEffect(() => {
-      console.log(123);
     if (ctx.totalAmount === 0) {
       // 购物车已经被清空
       setShowDetails(false);
