@@ -1,25 +1,16 @@
 import React, { useCallback, useContext, useState } from "react";
 import StuContext from "../store/StuContext";
 import StudentForm from "./StudentForm";
+import useFetch from "../hooks/useFetch";
 
 const Student = (props) => {
-  // {stu:{name, age, gender, address}} = props
   const ctx = useContext(StuContext);
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false)
+  const {loading, error, fetchData:delStu} = useFetch({
+    url:`students/${props.stu.id}`,
+    method:'delete'
+  },ctx.fetchData)
 
-  const delStu = useCallback(async () => {
-    try {
-      const res = await fetch(`http://localhost:1337/api/students/${props.stu.id}`, {
-        method: "delete",
-      });
-      if (!res.ok) {
-        throw new Error("删除失败");
-      }
-      ctx.fetchData(); // 修改成功后，触发列表刷新
-    } catch (error) {
-      console.log(error.message);
-    }
-  });
   const deleteHandler = () => {
     // 删除学生
     delStu();

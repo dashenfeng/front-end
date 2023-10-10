@@ -1,41 +1,16 @@
 import React, { useCallback, useContext, useState } from "react";
 import StuContext from "../store/StuContext";
+import useFetch from "../hooks/useFetch";
 
-export default function StudentForm(props)
-{
+export default function StudentForm(props) {
+  const ctx = useContext(StuContext);
   const [inputData, setInputData] = useState({
-    name: props.stu ? props.stu.attributes.name : '',
-    age: props.stu ? props.stu.attributes.age : '',
-    gender: props.stu ? props.stu.attributes.gender : '男',
-    address: props.stu ? props.stu.attributes.address : ''
+    name: props.stu ? props.stu.attributes.name : "",
+    age: props.stu ? props.stu.attributes.age : "",
+    gender: props.stu ? props.stu.attributes.gender : "男",
+    address: props.stu ? props.stu.attributes.address : "",
     // id: props.stu ? props.stu.attributes.id : '',
   });
-  const updateHandler = () => {
-    updateStudent(props.stu.id, inputData);
-  };
-  const updateStudent = useCallback(async (id, newStu) => {
-    try {
-      setError(null);
-      setLoading(true);
-      const res = await fetch(`http://localhost:1337/api/students/${id}`, {
-        method: "put",
-        body: JSON.stringify({ data: newStu }),
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
-
-      if (!res.ok) {
-        throw new Error("修改失败！");
-      }
-
-      ctx.fetchData();
-    } catch (e) {
-      setError(e);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
   const nameChangeHandler = (e) => {
     setInputData((prevState) => ({ ...prevState, name: e.target.value })); // 返回一个对象，用小括号括起来代表整体，省略了return
   };
@@ -48,36 +23,24 @@ export default function StudentForm(props)
   const addressChangeHandler = (e) => {
     setInputData((prevState) => ({ ...prevState, address: e.target.value })); // 返回一个对象，用小括号括起来代表整体，省略了return
   };
-  const submitHandler = () => {
-    addStudent();
-  };
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const ctx = useContext(StuContext);
 
-  // 添加学生
-  const addStudent = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const res = await fetch("http://localhost:1337/api/students", {
-        method: "post",
-        body: JSON.stringify({ data: inputData }),
-        // 「header」:告诉服务器这是json格式的
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
-      if (!res.ok) {
-        throw new Error("添加失败！");
-      } // 失败后程序就止步于此了
-      ctx.fetchData(); // 添加成功，刷新数据
-    } catch (e) {
-      setError(e);
-    } finally {
-      setLoading(false);
-    }
-  }, [inputData, ctx]);
+  const submitHandler = () => {
+    updateStudent(inputData);
+  };
+  const updateHandler = () => {
+    updateStudent(inputData);
+  };
+  const {
+    loading,
+    error,
+    fetchData: updateStudent,
+  } = useFetch(
+    {
+      url: props.stu ? `students/${props.stu.id}` : "students",
+      method: props.stu ? 'put' : 'post',
+    },
+    ctx.fetchData
+  );
 
   return (
     <>
@@ -129,7 +92,3 @@ export default function StudentForm(props)
     </>
   );
 }
-
-
-
-

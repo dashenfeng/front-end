@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useReducer, useState } from "react";
 import StudentList from "./components/StudentList";
 import "./App.css";
 import StuContext from "./store/StuContext";
+import useFetch from "./hooks/useFetch";
 
 // 模拟一组食物数据
 const MEALS_DATA = [
@@ -57,22 +58,9 @@ const MEALS_DATA = [
 ];
 
 const App = () => {
-  const [stuData, setStuData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // 记录错误信息
-
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    setError(null); // 初始化
-    const res = await fetch("http://localhost:1337/api/students");
-    if (res.ok) {
-      const data = await res.json();
-      setStuData(data.data);
-      setLoading(false);
-    } else {
-      throw new Error("数据加载失败");
-    }
-  },[])
+  const { data:stuData, loading, error, fetchData } = useFetch({
+    url:'students'
+  }); // 对象解构，拿到自定义钩子的返回值
 
   useEffect(() => {
     try {
@@ -81,21 +69,21 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
-  },[]);
+  }, []);
 
   const loadDataHandler = () => {
-    fetchData()
-  }
+    fetchData();
+  };
 
   return (
-    <StuContext.Provider value={{fetchData}}>
-    <div className="app">
+    <StuContext.Provider value={{ fetchData }}>
+      <div className="app">
         <button onClick={loadDataHandler}>加载数据</button>
-        {(!loading && !error) && <StudentList stus={stuData}/>}
+        {!loading && !error && <StudentList stus={stuData} />}
         {loading && <p>数据正在加载中...</p>}
         {error && <p>数据加载异常！</p>}
-    </div>
-</StuContext.Provider>
+      </div>
+    </StuContext.Provider>
   );
 };
 
