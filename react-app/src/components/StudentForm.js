@@ -1,22 +1,17 @@
 import React, { useCallback, useContext, useState } from "react";
 import StuContext from "../store/StuContext";
 
-export default function StudentForm({
-  name,
-  age,
-  gender,
-  address,
-  onCancel,
-  id,
-}) {
+export default function StudentForm(props)
+{
   const [inputData, setInputData] = useState({
-    name: name ? name : "",
-    age: age ? age : "",
-    gender: gender ? gender : "",
-    address: address ? address : "",
+    name: props.stu ? props.stu.attributes.name : '',
+    age: props.stu ? props.stu.attributes.age : '',
+    gender: props.stu ? props.stu.attributes.gender : '男',
+    address: props.stu ? props.stu.attributes.address : ''
+    // id: props.stu ? props.stu.attributes.id : '',
   });
   const updateHandler = () => {
-    updateStudent(id, inputData);
+    updateStudent(props.stu.id, inputData);
   };
   const updateStudent = useCallback(async (id, newStu) => {
     try {
@@ -59,6 +54,7 @@ export default function StudentForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const ctx = useContext(StuContext);
+
   // 添加学生
   const addStudent = useCallback(async () => {
     try {
@@ -111,13 +107,13 @@ export default function StudentForm({
             value={inputData.address}></input>
         </td>
         <td>
-          {inputData.name && (
+          {props.stu && (
             <>
-              <button onClick={() => onCancel()}>取消</button>
+              <button onClick={() => props.onCancel()}>取消</button>
               <button onClick={updateHandler}>确认</button>
             </>
           )}
-          {!inputData.name && <button onClick={submitHandler}>添加</button>}
+          {!props.stu && <button onClick={submitHandler}>添加</button>}
         </td>
       </tr>
       {loading && (
@@ -133,3 +129,7 @@ export default function StudentForm({
     </>
   );
 }
+
+
+
+
