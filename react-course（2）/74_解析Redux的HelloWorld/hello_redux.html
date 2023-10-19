@@ -31,6 +31,8 @@
     *       4.对store中的state进行订阅
     *       5.通过dispatch派发state的操作指令
     * */
+
+    // 创建reducer整合函数
     function reducer(state = {count:1,name:'孙悟空'}, action) {
         /*
         *   state 表示当前state，可以根据这个state生成新的state
@@ -64,7 +66,7 @@
 
 
     subBtn.addEventListener('click', () => {
-        store.dispatch({type: 'SUB'});
+        store.dispatch({type: 'SUB'});  // 传入对象作为参数，对象里面封装了我们要传的信息
     });
 
     addBtn.addEventListener('click', () => {
