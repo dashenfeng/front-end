@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { useLoginMutation, useRegisterMutation } from "../store/api/authApi";
 import { useDispatch } from "react-redux";
 import { login } from "../store/reducer/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function AuthForm() {
   const [isLoginForm, setIsLoginForm] = useState(true); // 记录当前是登录表单还是注册表单
@@ -14,7 +14,10 @@ export default function AuthForm() {
   const dispatch = useDispatch()
   // 获取Navigate
   const navigate = useNavigate()
+  const location = useLocation()
   
+  // ?. 判断后面的元素是否存在，如果不存在，则返回null
+  const from = location.state?.preLocation?.pathname || "/"
 
   // 引入注册api
   const [regFn, { error: regError }] = useRegisterMutation();
@@ -41,7 +44,7 @@ export default function AuthForm() {
           }))
           // 添加系统标识，标记用户的登录状态（布尔值，token(jwt))
           // 跳转页面到根目录
-          navigate("/", {replace:true})
+          navigate("/profile", {replace:true})
         }
       })
     } else {
