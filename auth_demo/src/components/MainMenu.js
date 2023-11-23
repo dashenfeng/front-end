@@ -5,7 +5,7 @@ import { logout } from "../store/reducer/authSlice";
 
 export default function MainMenu() {
   const auth = useSelector((state) => state.auth);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
     <header>
@@ -19,7 +19,12 @@ export default function MainMenu() {
               <Link to={"/profile"}>{auth.user.username}</Link>
             </li>
             <li>
-              <Link to={"/"} onClick={()=>dispatch(logout())}>登出</Link>
+              <Link to={"/student"}>学生信息</Link>
+            </li>
+            <li>
+              <Link to={"/"} onClick={() => dispatch(logout())}>
+                登出
+              </Link>
             </li>
           </>
         )}
